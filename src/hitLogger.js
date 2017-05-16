@@ -1,29 +1,27 @@
 class HitLogger {
 
   constructor() {
-    this.hits = {};
+    this.hits = [];
     this.maxTimespan = 5;
     this.cleanFrequency = 1;
   }
 
-  addHit(key) {
+  addHit() {
     let now = new Date().getTime();
-    let times = this.hits[key] || [];
-    times.push(now);
+    this.hits.push(now);
     let cleanThreshold = this.maxTimespan + this.cleanFrequency;
-    if(times[0] < getMinutesAgo(cleanThreshold, now)) {
+    if(this.hits[0] < getMinutesAgo(cleanThreshold, now)) {
       let cutoff = getMinutesAgo(this.maxTimespan, now);
-      this.hits[key] = getTimesAfterCutoff(times, cutoff);
+      this.hits = getTimesAfterCutoff(this.hits, cutoff);
     }
   }
 
-  getHits(minutes, key) {
+  getHits(minutes) {
     if(minutes > this.maxTimespan) {
       return "The request is beyond the supported timespan";
     }
-    let times = this.hits[key] || [];
     let cutoff = getMinutesAgo(minutes);
-    times = getTimesAfterCutoff(times, cutoff);
+    let times = getTimesAfterCutoff(this.hits, cutoff);
     return times.length;
   }
 }
@@ -42,7 +40,7 @@ function getMinutesAgo(minutes, now) {
 
 function getTimesAfterCutoff(times, cutoff) {
   // if cutoff is not defined, return times or an empty array
-  if(!cutoff) {
+  if(!cutoff || times[0] > cutoff) {
     return times || [];
   }
   // if times is an empty array or there are no times after the cutoff return an empty array
@@ -70,7 +68,6 @@ function getTimesAfterCutoff(times, cutoff) {
 // export a new instance of the Hit logger to use for the app
 module.exports = {
   HitLogger: HitLogger,
-  hitLogger: new HitLogger(),
   getTimesAfterCutoff: getTimesAfterCutoff,
   getMinutesAgo: getMinutesAgo
 };
