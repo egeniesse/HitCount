@@ -11,36 +11,40 @@ class HitLogger {
     let times = this.hits[key] || [];
     times.push(now);
     let cleanThreshold = this.maxTimespan + this.cleanFrequency;
-    if(times[0] < _getMinutesAgo(cleanThreshold, now)) {
-      let cutoff = _getMinutesAgo(this.maxTimespan, now);
-      this.hits[key] = _getTimesAfterCutoff(times, cutoff);
+    if(times[0] < getMinutesAgo(cleanThreshold, now)) {
+      let cutoff = getMinutesAgo(this.maxTimespan, now);
+      this.hits[key] = getTimesAfterCutoff(times, cutoff);
     }
   }
 
   getHits(minutes, key) {
     if(minutes > this.maxTimespan) {
-      return "The request is beyond the supported timespan"
+      return "The request is beyond the supported timespan";
     }
     let times = this.hits[key] || [];
-    let cutoff = _getMinutesAgo(minutes)
-    times = _getTimesAfterCutoff(times, cutoff);
+    let cutoff = getMinutesAgo(minutes);
+    times = getTimesAfterCutoff(times, cutoff);
     return times.length;
   }
 }
 
-function _getMinutesAgo(minutes, now) {
+function getMinutesAgo(minutes, now) {
   now = now || new Date().getTime();
   return now - (minutes * 60000);
 }
 
 /*
- * _getTimesAfterCutoff: When given a sorted (ascending) array of unix times and 
+ * getTimesAfterCutoff: When given a sorted (ascending) array of unix times and 
  * cutoff, returns an array of times that are greater than the cutoff timestamp
  * This is done by performing a binary search of the times array to determine the index
  * index of the first timestamp after the cutoff and then slicing the array on that index
  */
 
-function _getTimesAfterCutoff(times, cutoff) {
+function getTimesAfterCutoff(times, cutoff) {
+  // if cutoff is not defined, return times or an empty array
+  if(!cutoff) {
+    return times || [];
+  }
   // if times is an empty array or there are no times after the cutoff return an empty array
   if(times.length === 0 || times[times.length-1] < cutoff) {
     return [];
@@ -64,5 +68,10 @@ function _getTimesAfterCutoff(times, cutoff) {
 }
 
 // export a new instance of the Hit logger to use for the app
-module.exports = new HitLogger();
+module.exports = {
+  HitLogger: HitLogger,
+  hitLogger: new HitLogger(),
+  getTimesAfterCutoff: getTimesAfterCutoff,
+  getMinutesAgo: getMinutesAgo
+};
 
