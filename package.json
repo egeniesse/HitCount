@@ -1,0 +1,22 @@
+{
+  "name": "hitlogger",
+  "version": "1.0.0",
+  "description": "A node library that logs the amount of times an api is called",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egeniesse/HitLogger.git"
+  },
+  "author": "Eric Geniesse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/egeniesse/HitLogger/issues"
+  },
+  "homepage": "https://github.com/egeniesse/HitLogger#readme"
+}
