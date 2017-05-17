@@ -1,3 +1,5 @@
+var utils = require("./utils")
+
 class HitLogger {
 
   constructor() {
@@ -10,8 +12,8 @@ class HitLogger {
     let now = new Date().getTime();
     this.hits.push(now);
     let cleanThreshold = this.maxTimespan + this.cleanFrequency;
-    if(this.hits[0] < getMinutesAgo(cleanThreshold, now)) {
-      let cutoff = getMinutesAgo(this.maxTimespan, now);
+    if(this.hits[0] < utils.getMinutesAgo(cleanThreshold, now)) {
+      let cutoff = utils.getMinutesAgo(this.maxTimespan, now);
       this.hits = getTimesAfterCutoff(this.hits, cutoff);
     }
   }
@@ -24,15 +26,14 @@ class HitLogger {
         code: 400
       };
     }
-    let cutoff = getMinutesAgo(minutes);
+    let cutoff = utils.getMinutesAgo(minutes);
     let times = getTimesAfterCutoff(this.hits, cutoff);
     return times.length;
   }
-}
 
-function getMinutesAgo(minutes, now) {
-  now = now || new Date().getTime();
-  return now - (minutes * 60000);
+  clear() {
+    this.hits = []
+  }
 }
 
 /*
@@ -72,7 +73,6 @@ function getTimesAfterCutoff(times, cutoff) {
 
 module.exports = {
   HitLogger: HitLogger,
-  getTimesAfterCutoff: getTimesAfterCutoff,
-  getMinutesAgo: getMinutesAgo
+  getTimesAfterCutoff: getTimesAfterCutoff
 };
 

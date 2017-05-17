@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha spec/index.js"
+    "unit-test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "url": "https://github.com/egeniesse/HitLogger/issues"
   },
   "homepage": "https://github.com/egeniesse/HitLogger#readme",
-  "dependencies": {
+  "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.4.1"
   }
