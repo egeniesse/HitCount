@@ -9,11 +9,11 @@ class HitLogger {
   }
 
   addHit() {
-    let now = new Date().getTime();
+    var now = new Date().getTime();
     this.hits.push(now);
-    let cleanThreshold = this.maxTimespan + this.cleanFrequency;
+    var cleanThreshold = this.maxTimespan + this.cleanFrequency;
     if(this.hits[0] < utils.getMinutesAgo(cleanThreshold, now)) {
-      let cutoff = utils.getMinutesAgo(this.maxTimespan, now);
+      var cutoff = utils.getMinutesAgo(this.maxTimespan, now);
       this.hits = getTimesAfterCutoff(this.hits, cutoff);
     }
   }
@@ -26,8 +26,8 @@ class HitLogger {
         code: 400
       };
     }
-    let cutoff = utils.getMinutesAgo(minutes);
-    let times = getTimesAfterCutoff(this.hits, cutoff);
+    var cutoff = utils.getMinutesAgo(minutes);
+    var times = getTimesAfterCutoff(this.hits, cutoff);
     return times.length;
   }
 
@@ -54,9 +54,9 @@ function getTimesAfterCutoff(times, cutoff) {
     return [];
   }
   
-  let centerIndex = Math.floor(times.length/2);
-  let leftIndex = 0;
-  let rightIndex = times.length-1;
+  var centerIndex = Math.floor(times.length/2);
+  var leftIndex = 0;
+  var rightIndex = times.length-1;
 
   while(leftIndex !== rightIndex-1) {
     if(cutoff > times[centerIndex]) {

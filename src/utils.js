@@ -1,6 +1,6 @@
 function makeTimestamps(minutes, now) {
   now = now || new Date().getTime();
-  return minutes.map((minute) => {
+  return minutes.map(function(minute) {
     return getMinutesAgo(minute, now);
   });
 }
