@@ -1,4 +1,4 @@
-let hitLogger = require("./test");
+let hitLogger = require("../index.js");
 
 module.exports = function(opts) {
   let { maxTimespan, cleanFrequency, hitFilter } = opts;
