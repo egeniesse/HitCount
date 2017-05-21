@@ -1,0 +1,11 @@
+dependencies:
+  override:
+    - npm install
+  post:
+    - npm run server:
+        background: true
+test:
+  override:
+    - npm run test:unit
+    - npm run test:api
+  

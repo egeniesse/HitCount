@@ -1,26 +1,32 @@
 {
-  "name": "hitlogger",
+  "name": "hitcounter",
   "version": "1.0.0",
-  "description": "A node library that logs the amount of times an api is called",
+  "description": "A node library that counts the amount of times an api is hit",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "unit-test": "./node_modules/.bin/mocha"
+    "test:unit": "./node_modules/.bin/mocha test/unit/",
+    "test:api": "./node_modules/.bin/mocha test/api/",
+    "server": "node ./sample/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/egeniesse/HitLogger.git"
+    "url": "git+https://github.com/egeniesse/HitCounter.git"
   },
   "author": "Eric Geniesse",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/egeniesse/HitLogger/issues"
+    "url": "https://github.com/egeniesse/HitCounter/issues"
   },
-  "homepage": "https://github.com/egeniesse/HitLogger#readme",
+  "homepage": "https://github.com/egeniesse/HitCounter#readme",
   "devDependencies": {
+    "body-parser": "^1.17.1",
     "chai": "^3.5.0",
-    "mocha": "^3.4.1"
+    "express": "^4.15.3",
+    "mocha": "^3.4.1",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
   }
 }
