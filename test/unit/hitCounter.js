@@ -86,7 +86,7 @@ describe("HitCounter", function() {
         expect(true).to.equal(false);
       }
       catch(err) {
-        expect(err).to.equal("The timeframe needs to be greater than 0");
+        expect(err).to.equal("The timeframe needs to be greater than or equal to 0");
       }
     });
   });

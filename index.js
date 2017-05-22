@@ -54,7 +54,7 @@ HitCounter.prototype.getHits = function(seconds) {
     throw "The timeframe is beyond the supported limit";
   }
   if(seconds < 0) {
-    throw "The timeframe needs to be greater than 0";
+    throw "The timeframe needs to be greater than or equal to 0";
   }
   var now = utils.newTimestamp();
   var cutoff = now - seconds;

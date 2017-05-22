@@ -46,10 +46,10 @@ describe("Sample API", function() {
   });
   it("should not count hits that happened beyond the inputted timeframe", function() {
     return fetch("GET", "/v1/app").then(function() {
-      return wait(1500).then(function() {
-        return fetch("GET", "/api/hits", { seconds: 1 }).then(function(res) {
+      return wait(1000).then(function() {
+        return fetch("GET", "/api/hits", { seconds: 0 }).then(function(res) {
           expect(res.message).to.equal(0);
-          return fetch("GET", "/api/hits", { seconds: 5 }).then(function(res) {
+          return fetch("GET", "/api/hits", { seconds: 2 }).then(function(res) {
             expect(res.message).to.equal(1);
           });
         });
@@ -71,7 +71,7 @@ describe("Sample API", function() {
   it("should return an error if the request is less than 0", function() {
     return fetch("GET", "/api/hits", { seconds: -2 }).then(function(err) {
       expect(err.code).to.equal(400);
-      expect(err.message).to.equal("The timeframe needs to be greater than 0");
+      expect(err.message).to.equal("The timeframe needs to be greater than or equal to 0");
     });
   });
   it("should return an error no parameter was passed in", function() {
