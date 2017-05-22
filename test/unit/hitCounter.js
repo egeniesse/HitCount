@@ -26,7 +26,7 @@ describe("HitCounter", function() {
       counter._hits = times;
       expect(counter.maxTimespan).to.equal(500);
       expect(counter.getHits(452)).to.equal(12);
-      counter.addHit()
+      counter.addHit();
       expect(counter._hits.length).to.equal(14);
     });
   });

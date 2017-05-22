@@ -6,10 +6,11 @@ function makeTimestamps(seconds, now) {
     return {
       time: now - second,
       hits: 1
-    }
+    };
   });
 }
 
+// returns a new timestamp accurate to the second rather than millisecond
 function newTimestamp() {
   var now = new Date().getTime();
   return Math.floor(now / 1000);

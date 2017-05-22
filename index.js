@@ -12,7 +12,7 @@ function HitCounter() {
 }
 
 /*
- * addHit: Adds a timestamp to the instance's hits array. Removing hit timestamps from the array if 
+ * addHit: Adds a hit object to the hits array. Removing hit objects from the array if 
  * there is are any that are older the allowed threshold 
  */
 
@@ -36,7 +36,7 @@ HitCounter.prototype.addHit = function() {
 
 /*
  * getHits: Class method that returns the number of hits that happened between now
- * certain seconds ago
+ * and a specified number of seconds ago
  * Arguments:
  *  seconds Number: The time limit of hits we are getting
  * Return:

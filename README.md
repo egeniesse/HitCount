@@ -18,12 +18,9 @@ The counter object exposes properties to count hits using middleware, or manuall
 
 ### counter.maxTimespan
 How long to retain hit information (seconds)
-##### cleanFrequency (Number)
-How often hits older than maxTimespan are deleted (seconds)
 
 ### counter.listen(paths)
 Returns middleware that counts hits to the server
-
 #### paths (Array)
 Specify which paths to count as hits
 
