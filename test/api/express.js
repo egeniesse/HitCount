@@ -56,6 +56,21 @@ describe("Sample API", function() {
       });
     }); 
   });
+  it("should be able to get total hits for a tagged endpoint", function() {
+    return sendRequests(4, "/v1/app").then(function() {
+      return sendRequests(6, "/v2/app").then(function() {
+        return fetch("GET", "/api/hits", { seconds: 10, tag: "/v1/app" }).then(function(res) {
+          expect(res.message).to.equal(4);
+          return fetch("GET", "/api/hits", { seconds: 10, tag: "/v2/app" }).then(function(res) {
+            expect(res.message).to.equal(6);
+            return fetch("GET", "/api/hits", { seconds: 10 }).then(function(res) {
+              expect(res.message).to.equal(10);
+            }); 
+          }); 
+        }); 
+      }); 
+    }); 
+  });
   it("should return an error if the request is a string", function() {
     return fetch("GET", "/api/hits", { seconds: "string" }).then(function(err) {
       expect(err.code).to.equal(400);
@@ -83,6 +98,7 @@ describe("Sample API", function() {
 });
 
 
+// Sends several fetch requests to an endpoint with params and returns a promise
 function sendRequests(num, path, params) {
   var requests = [];
   for(var i=0; i<num; i++) {
@@ -91,6 +107,7 @@ function sendRequests(num, path, params) {
   return Promise.all(requests);
 }
 
+// generic fetch method that returns a promise
 function fetch(method, path, params) {
   return request({
     method: method,
@@ -98,6 +115,7 @@ function fetch(method, path, params) {
   }).then(JSON.parse);
 }
 
+// Returns a promise after waiting specified milliseconds 
 function wait(milliseconds) {
   return new Promise(function(resolve, reject) {
     setTimeout(function() {

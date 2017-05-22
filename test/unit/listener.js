@@ -23,6 +23,7 @@ describe("Listener", function() {
       expect(counter.getHits(1)).to.equal(2);
     });
   });
+
   describe("configuration", function() {
     var activeListener = counter.listen(["/hit"]);
     it("should filter out requests that aren not hits", function() {
@@ -33,6 +34,7 @@ describe("Listener", function() {
       expect(counter.getHits(1)).to.equal(1);
     });
   });
+
   describe("behavior", function() {
     var activeListener = counter.listen();
     it("should return hits that are within the specified cutoff", function() {

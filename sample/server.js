@@ -21,10 +21,11 @@ app.get("/api/data", function(req, res) {
 
 // set up the endpoint we are designating to retrieve hits
 app.get("/api/hits", function(req, res) {
-  // get the registered hits if the timeframe is supported
+  // get the api hits for the timeframe and optional tag
   try {
     var timeframe = req.query.seconds;
-    var hits = counter.getHits(timeframe);
+    var tag = req.query.tag;
+    var hits = counter.getHits(timeframe, tag);
     res.json(buildResponse("GOOD_REQUEST", hits));
   }
   // if the timeframe isn't supported, send the error

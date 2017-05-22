@@ -30,6 +30,7 @@ describe("HitCounter", function() {
       expect(counter._hits.length).to.equal(14);
     });
   });
+
   describe("clear", function() {
     it("should clear out all of the stored hits", function() {
       var times = utils.makeTimestamps([500,450,400,350,299,220,200,180,150,120,100,50,1]);
@@ -45,7 +46,12 @@ describe("HitCounter", function() {
       counter.addHit();
       expect(counter._hits.length).to.equal(1);
     });
-
+    it("should be able to tag hits", function() {
+      counter.addHit("test");
+      expect(counter._hits[0]).to.have.property("test");
+      expect(counter._hits[0].test).to.equal(1);
+      expect(counter._hits[0].total).to.equal(1);
+    });
     it("should clean up hits that are older than the max timespan", function() {
       var times = utils.makeTimestamps([500,450,400,350,290,220,200,180,150,120,100,50,1], now);
       counter._hits = times;
@@ -61,6 +67,12 @@ describe("HitCounter", function() {
       counter._hits = times;
       expect(counter.getHits(240)).to.equal(8);
       expect(counter.getHits(190)).to.equal(6);
+    });
+    it("should return hits that share the same tag", function() {
+      counter.addHit("tag1");
+      counter.addHit("tag2");
+      expect(counter.getHits(2, "tag1")).to.equal(1);
+      expect(counter.getHits(2)).to.equal(2);
     });
     it("should throw an error if the request is beyond the supported timespan", function() {
       try {

@@ -20,16 +20,21 @@ The counter object exposes properties to count hits using middleware, or manuall
 How long to retain hit information (seconds)
 
 ### counter.listen(paths)
-Returns middleware that counts hits to the server
-#### paths (Array)
+Returns middleware that counts hits to the specified paths
+#### paths (Array) REQUIRED
 Specify which paths to count as hits
 
-### counter.getHits(seconds)
-#### Seconds (Number)
-Set the timeframe for hits to get back
+### counter.addHit(tag)
+Adds a hit to the count
+#### Tag (String) OPTIONAL
+Adds a hit to the tag count in addition to the total count
 
-### counter.addHit()
-Adds a hit record to the counter
+### counter.getHits(seconds, tag)
+Returns the number of hits to api endpoints
+#### Seconds (Number) REQUIRED
+Set the timeframe for hits to get back
+#### Tag (String) OPTIONAL
+Returns hits to endpoints that have the passed in tag
 
 ### counter.clear()
 Clears out all of the stored hit records
@@ -85,6 +90,38 @@ app.get("/app", function(req, res) {
 // set up the endpoint we are designating to retrieve hit counts
 app.get("/hits", function(req, res) {
   var hits = counter.getHits(req.query.seconds);
+  res.send("There have been " + hits + " so far!");
+});
+
+// start the server
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+```
+
+### Tracking hits to multiple endpoints
+
+```js
+var counter = require("hitcounter");
+var express = require("express");
+var app = express();
+
+// set up the listener to listen to multiple endpoints
+app.use(counter.listen(["/v1/app", "/v2/app"]));
+
+app.get("/v1/app", function(req, res) {
+  res.send("This is a hit for /v1/app");
+});
+
+app.get("/v2/app", function(req, res) {
+  res.send("This is a hit for /v2/app");
+});
+
+// set up the endpoint we are designating to retrieve hit counts
+app.get("/hits", function(req, res) {
+  var tag = req.query.tag;
+  var seconds = req.query.seconds
+  var hits = counter.getHits(seconds, tag);
   res.send("There have been " + hits + " so far!");
 });
 

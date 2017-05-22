@@ -16,14 +16,20 @@ function HitCounter() {
  * there is are any that are older the allowed threshold 
  */
 
-HitCounter.prototype.addHit = function() {
+HitCounter.prototype.addHit = function(tag) {
   var now = utils.newTimestamp();
   // if this is the first hit, or the timestamp is greater than the last time, insert a new hit
   if(!this._hits.length || this._hits[this._hits.length-1].time < now) {
-    this._hits.push({ time: now, hits: 0 });
+    this._hits.push({ time: now, total: 0 });
   }
-  // increment the most recent hit
-  this._hits[this._hits.length-1].hits++;
+  var hitCount = this._hits[this._hits.length-1];
+  // if a tag was passed in, add the prop if it doesn't exist and increment the count
+  if(tag !== undefined) {
+    hitCount[tag] = hitCount[tag] || 0;
+    hitCount[tag]++;
+  }
+  // increment the total hits
+  hitCount.total++;
   // if the oldest timestamp is beyond the allowed threshold
   var cutoff = now - this.maxTimespan;
   if(this._hits[0].time < cutoff) {
@@ -43,7 +49,7 @@ HitCounter.prototype.addHit = function() {
  *  hits Number: The number of hits that happened in that timeframe
  */
 
-HitCounter.prototype.getHits = function(seconds) {
+HitCounter.prototype.getHits = function(seconds, tag) {
   if(seconds === undefined) {
     throw "You must specify a timeframe";
   }
@@ -58,10 +64,12 @@ HitCounter.prototype.getHits = function(seconds) {
   }
   var now = utils.newTimestamp();
   var cutoff = now - seconds;
-  // reduce the _hits array only tallying the hits that happened within the cutoff
+  // if no tag has been passed in, default to total
+  tag = tag || "total";
+  // reduce the _hits array only tallying the hits to a tag within the cutoff
   return this._hits.reduce(function(total, hit) {
-    if(hit.time >= cutoff) {
-      total += hit.hits;
+    if(hit.time >= cutoff && hit[tag]) {
+      total += hit[tag];
     }
     return total;
   }, 0);
@@ -92,7 +100,7 @@ HitCounter.prototype.listen = function(paths) {
     var path = req._parsedUrl.pathname;
     // if the path was passed in
     if(!paths || paths.has(path)){
-      this.addHit();
+      this.addHit(path);
     }
     next();
   }.bind(this);

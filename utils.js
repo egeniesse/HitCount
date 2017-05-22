@@ -5,7 +5,7 @@ function makeTimestamps(seconds, now) {
   return seconds.map(function(second) {
     return {
       time: now - second,
-      hits: 1
+      total: 1
     };
   });
 }
