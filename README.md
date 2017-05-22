@@ -1,4 +1,4 @@
-# HitCounter - Simple way to count express server requests
+# HitCount - Simple way to count server requests
 
 [![CircleCI](https://circleci.com/gh/egeniesse/HitCount.svg?style=svg)](https://circleci.com/gh/egeniesse/HitCount)
 
@@ -6,7 +6,7 @@
 ## Installation
 
 ```bash
-$ npm install --save git+https://github.com/egeniesse/HitCounter.git
+$ npm install --save git+https://github.com/egeniesse/HitCount.git
 ```
 
 ## API
