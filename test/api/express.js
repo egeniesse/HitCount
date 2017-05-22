@@ -9,21 +9,21 @@ beforeEach(function() {
 });
 
 describe("Sample API", function() {
-  it("should not count hits when calling the specified endpoints", function() {
+  it("should not count hits when calling untracked endpoints", function() {
     return sendRequests(4, "/api/data").then(function(){
       return fetch("GET", "/api/hits", { seconds: 5 }).then(function(res) {
         expect(res.message).to.equal(0);
       });
     });
   });
-  it("should be able to count hits", function() {
+  it("should be able to count hits to tracked endpoints", function() {
     return sendRequests(2, "/v1/app").then(function(){
       return fetch("GET", "/api/hits", { seconds: 5 }).then(function(res) {
         expect(res.message).to.equal(2);
       });
     });
   });
-  it("should be able to count hits on all paths specified", function() {
+  it("should be able to count hits on multiple endpoints", function() {
     return sendRequests(2, "/v1/app").then(function(){
       return sendRequests(3, "/v2/app").then(function(){
         return fetch("GET", "/api/hits", { seconds: 5 }).then(function(res) {
@@ -44,7 +44,7 @@ describe("Sample API", function() {
       });
     });
   });
-  it("should not count hits that happened beyond the inputted timeframe", function() {
+  it("should not count hits that happened beyond the maxTimespan", function() {
     return fetch("GET", "/v1/app").then(function() {
       return wait(1000).then(function() {
         return fetch("GET", "/api/hits", { seconds: 0 }).then(function(res) {
@@ -56,7 +56,7 @@ describe("Sample API", function() {
       });
     }); 
   });
-  it("should be able to get total hits for a tagged endpoint", function() {
+  it("should be able to get total hits for a tagged endpoints", function() {
     return sendRequests(4, "/v1/app").then(function() {
       return sendRequests(6, "/v2/app").then(function() {
         return fetch("GET", "/api/hits", { seconds: 10, tag: "/v1/app" }).then(function(res) {

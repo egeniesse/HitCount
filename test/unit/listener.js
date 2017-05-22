@@ -26,7 +26,7 @@ describe("Listener", function() {
 
   describe("configuration", function() {
     var activeListener = counter.listen(["/hit"]);
-    it("should filter out requests that aren not hits", function() {
+    it("should filter out requests that are not hits", function() {
       expect(counter.getHits(1)).to.equal(0);
       activeListener({_parsedUrl: {pathname: "/hit"}},{}, function(){});
       expect(counter.getHits(1)).to.equal(1);
@@ -45,7 +45,7 @@ describe("Listener", function() {
       expect(counter._hits.length).to.equal(10);
       expect(counter.getHits(190)).to.equal(7);
     });
-    it("should clean up hits if the oldest hit is within the maxTimespan", function() {
+    it("should clean up hits if the oldest hit is beyond the maxTimespan", function() {
       var times = utils.makeTimestamps([500,450,400,350,299,220,200,180,150,120,100,50,1]);
       counter._hits = times;
       activeListener({_parsedUrl: {pathname: "/hit"}},{}, function(){});

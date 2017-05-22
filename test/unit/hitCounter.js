@@ -52,7 +52,7 @@ describe("HitCounter", function() {
       expect(counter._hits[0].test).to.equal(1);
       expect(counter._hits[0].total).to.equal(1);
     });
-    it("should clean up hits that are older than the max timespan", function() {
+    it("should clean up hits that are older than the maxTimespan", function() {
       var times = utils.makeTimestamps([500,450,400,350,290,220,200,180,150,120,100,50,1], now);
       counter._hits = times;
       expect(counter._hits.length).to.equal(13);
@@ -74,7 +74,7 @@ describe("HitCounter", function() {
       expect(counter.getHits(2, "tag1")).to.equal(1);
       expect(counter.getHits(2)).to.equal(2);
     });
-    it("should throw an error if the request is beyond the supported timespan", function() {
+    it("should throw an error if the request is beyond the maxTimespan", function() {
       try {
         var hits = counter.getHits(301);
         expect(true).to.equal(false);
