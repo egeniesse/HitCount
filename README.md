@@ -1,6 +1,6 @@
 # HitCounter - Simple way to count express server requests
 
-[![CircleCI](https://circleci.com/gh/egeniesse/HitCounter/tree/master.svg?style=svg)](https://circleci.com/gh/egeniesse/HitCounter/tree/master)
+[![CircleCI](https://circleci.com/gh/egeniesse/HitCount.svg?style=svg)](https://circleci.com/gh/egeniesse/HitCount)
 
 
 ## Installation
