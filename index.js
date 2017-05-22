@@ -4,6 +4,28 @@ var utils = require("./utils");
  * Attributes:
  *  _hits Array: an array used to store the hit timestamps
  *  maxTimespan Number: The supported timeframe (in seconds) of hits we are storing 
+ *
+ * Implementation Design:
+ *  A quick overview on about how I'm storing hit count data and why I'm doing it this way.
+ *  Data Structure:
+ *    I am storing hits using an array of javascript objects that represent 1 second windows. 
+ *    Properties:
+ *      time: the unix timestamp (floored to the previous second).
+ *      total: the total number of hits.
+ *      <tag>: the total number of hits for the tag.
+ *    Benefits:
+ *      - Memory Scales Well: The memory usage is relatively small and consistent regardless of 
+ *        demand ( 5 minutes of 64-bit unix timestamps at 1 million requests per second ~ 1.2 GB ).
+ *      - Memory Management: Old records only need to be deleted once every second (worst case).
+ *      - Extendable: can store additional data (ex. tag information, requestor information...).
+ *     Limitations:
+ *      - Accuracy: It is only accurate to the second. All of the millisecond data is lost.
+ *  Data Storage:
+ *    The data is stored in-memory in a javascript array.
+ *    Benefits:
+ *      - Pretty Efficient: Writes are O(1), getting and deleting hits are O(n) "n" is the maxTimeframe.
+ *    Limitations:
+ *      - Getting and Deleting Hits: If maxTimeframe becomes a huge number, gets and deletes get pretty expensive.
  */
 
 function HitCounter() {
