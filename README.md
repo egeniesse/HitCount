@@ -22,8 +22,7 @@ How long to retain hit information (seconds)
 ### counter.listen(paths)
 Returns middleware that counts hits to the specified paths
 #### paths (Array) REQUIRED
-##### path (String)
-The path for the endpoint to track. Each path passed in is automatically tagged with the path name by the counter.
+An array of path strings for the counter to track. Each path passed in is automatically tagged with the path name by the counter.
 
 ### counter.addHit(tag)
 Adds a hit to the count
