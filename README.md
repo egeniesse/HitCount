@@ -6,7 +6,7 @@
 ## Installation
 
 ```bash
-$ npm install --save git+https://github.com/egeniesse/HitCounter.git
+$ npm install --save git+https://github.com/egeniesse/HitCount.git
 ```
 
 ## API
