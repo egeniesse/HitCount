@@ -22,7 +22,7 @@ How long to retain hit information (seconds)
 ### counter.listen(paths)
 Returns middleware that counts hits to the specified paths
 #### paths (Array) REQUIRED
-Specify which paths to count as hits
+An array of path strings for the counter to track. Each path passed in is automatically tagged with the path name by the counter.
 
 ### counter.addHit(tag)
 Adds a hit to the count
@@ -119,8 +119,9 @@ app.get("/v2/app", function(req, res) {
 
 // set up the endpoint we are designating to retrieve hit counts
 app.get("/hits", function(req, res) {
+  // extract the tag and timeframe out of the query
   var tag = req.query.tag;
-  var seconds = req.query.seconds
+  var seconds = req.query.seconds;
   var hits = counter.getHits(seconds, tag);
   res.send("There have been " + hits + " so far!");
 });
