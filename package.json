@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/egeniesse/HitCounter.git"
+    "url": "git+https://github.com/egeniesse/HitCount.git"
   },
   "author": "Eric Geniesse",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/egeniesse/HitCounter/issues"
+    "url": "https://github.com/egeniesse/HitCount/issues"
   },
-  "homepage": "https://github.com/egeniesse/HitCounter#readme",
+  "homepage": "https://github.com/egeniesse/HitCount#readme",
   "devDependencies": {
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
